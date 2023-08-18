@@ -39,6 +39,7 @@ const createTodoElement = (todo, index) => {
     const buttonDelete = document.createElement("button");
     buttonDelete.innerHTML = "Supprimer";
     buttonDelete.addEventListener("click", event => {
+        event.stopPropagation();
         deleteTodo(index);
     })
     li.innerHTML = `
@@ -46,6 +47,9 @@ const createTodoElement = (todo, index) => {
     
     <p>${todo.text}</p>`;
     li.append(buttonDelete);
+    li.addEventListener("click", event => {
+        toggleTodo(index);
+    })
 
     return li;
 };
@@ -65,5 +69,10 @@ const deleteTodo = index => {
     displayTodo();
 }
 
+
+const toggleTodo = index => {
+    todos[index].done = !todos[index].done;
+    displayTodo();
+}
 
 displayTodo();
